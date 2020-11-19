@@ -176,9 +176,9 @@ class Builder extends BaseBuilder
      * @param  string $table
      * @return $this
      */
-    public function from($collection)
+    public function from($table, $as = null)
     {
-        return parent::from($collection);
+        return parent::from($table, $as = null);
     }
 
     /**
