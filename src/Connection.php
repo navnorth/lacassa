@@ -38,16 +38,17 @@ class Connection extends BaseConnection
         $query = new Query\Builder($this);
         return $query->from($collection);
     }
-
+    
     /**
-     * Begin a fluent query against a database collection.
+     * Begin a fluent query against a database table.
      *
-     * @param  string $table
-     * @return Query\Builder
+     * @param  \Closure|\Illuminate\Database\Query\Builder|string  $table
+     * @param  string|null  $as
+     * @return \Illuminate\Database\Query\Builder
      */
-    public function table($table)
+    public function table($table, $as = null)
     {
-        return $this->collection($table);
+        return $this->collection($table,$as);
     }
 
     /**
