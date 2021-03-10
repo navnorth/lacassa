@@ -48,6 +48,7 @@ And add a new cassandra connection:
             'keyspace' => env('DB_DATABASE', 'cassandra_db'),
         	'username' => env('DB_USERNAME', ''),
         	'password' => env('DB_PASSWORD', ''),
+            'password' => env('DB_CERTFILE', ''),
      ],
 
 ### **Auth**
