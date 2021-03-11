@@ -51,6 +51,14 @@ And add a new cassandra connection:
             'password' => env('DB_CERTFILE', ''),
      ],
 
+For AWS Keyspaces, the DB_CERTFILE can be generated via the following:
+
+```
+curl https://certs.secureserver.net/repository/sf-class2-root.crt -O
+```
+
+Once you have the file sf-class2-root.crt, you can store this in a secure directory and reference it via the DB_CERTFILE environment variable.
+
 ### **Auth**
 
 You can use Laravel's native Auth functionality for cassandra, make sure your config/auth.php looks like 
