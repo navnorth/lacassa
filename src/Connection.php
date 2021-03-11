@@ -23,7 +23,7 @@ class Connection extends BaseConnection
         $this->config = $config;
         // Create the connection
         $this->db = $config['keyspace'];
-        $this->connection = $this->createConnection($config);
+        $this->connection = strpos($config['host'], 'amazonaws.com') !== FALSE ? $this->createConnectionAWS($config) : $this->createConnection($config);
         $this->useDefaultPostProcessor();
     }
 
@@ -93,6 +93,31 @@ class Connection extends BaseConnection
         return $connection;
     }
 
+    /**
+     * Create a new Cassandra connection with SSL for AWS.
+     *
+     * @param  array $config
+     * @return \Cassandra\DefaultSession
+     */
+    protected function createConnectionAWS(array $config)
+    {
+       $ssl = Cassandra::ssl()
+               ->withVerifyFlags(Cassandra::VERIFY_PEER_CERT)
+               ->withTrustedCerts($config['certfile'])
+               ->build();     
+        
+        $cluster   = Cassandra::cluster()
+        ->withContactPoints($config['host'])
+        ->withPort((int) $config['port'])
+        ->withCredentials($config['username'], $config['password'])
+        ->withSSL($ssl)
+        ->withDefaultConsistency(Cassandra::CONSISTENCY_LOCAL_QUORUM)
+        ->build();
+
+        $connection   = $cluster->connect($config['keyspace']);
+        return $connection;
+    }
+    
     /**
      * @inheritdoc
      */

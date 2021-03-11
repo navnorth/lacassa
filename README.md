@@ -48,7 +48,16 @@ And add a new cassandra connection:
             'keyspace' => env('DB_DATABASE', 'cassandra_db'),
         	'username' => env('DB_USERNAME', ''),
         	'password' => env('DB_PASSWORD', ''),
+            'password' => env('DB_CERTFILE', ''),
      ],
+
+For AWS Keyspaces, the DB_CERTFILE can be generated via the following:
+
+```
+curl https://certs.secureserver.net/repository/sf-class2-root.crt -O
+```
+
+Once you have the file sf-class2-root.crt, you can store this in a secure directory and reference it via the DB_CERTFILE environment variable.
 
 ### **Auth**
 
